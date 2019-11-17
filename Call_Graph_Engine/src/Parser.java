@@ -64,6 +64,7 @@ public class Parser {
 			reader = new BufferedReader(new FileReader(filename));
 			String line = reader.readLine();
 			while (line != null) {
+				// support both acdc and arc
 				if (line.startsWith("contain ")) {
 					line = line.substring(8).trim();
 //					System.out.println(line);
@@ -74,7 +75,7 @@ public class Parser {
 					} catch (Exception e) {
 //						System.out.println("!!!" + cluster + ": " + cla + "does not exist in graph");
 					}
-				}				
+				}
 				line = reader.readLine();
 			}
 			reader.close();

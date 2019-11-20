@@ -124,7 +124,8 @@ public class Graph {
 						set11.add(next);
 						probed1.put(next, depth);
 						if (probed2.containsKey(next)) {
-							System.out.println(next.getName() + ": " + probed1.get(next) + " " + probed2.get(next));
+							if (!next.getName().startsWith("java"))
+								System.out.println(next.getName() + ": " + probed1.get(next) + " " + probed2.get(next));
 							// we do not go any deeper from this node
 							set11.remove(next);
 						}
@@ -140,7 +141,8 @@ public class Graph {
 						set22.add(next);
 						probed2.put(next, depth);
 						if (probed1.containsKey(next)) {
-							System.out.println(next.getName() + ": " + probed1.get(next) + " " + probed2.get(next));
+							if (!next.getName().startsWith("java"))
+								System.out.println(next.getName() + ": " + probed1.get(next) + " " + probed2.get(next));
 							set11.remove(next);
 							set22.remove(next);
 						}

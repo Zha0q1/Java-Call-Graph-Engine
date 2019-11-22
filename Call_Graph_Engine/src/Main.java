@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class Main {
 	public static void main(String args[]) {
@@ -11,11 +13,18 @@ public class Main {
 		
 		
 		// use g.bfs("{class/method/cluster}") to run bfs 
-		// use g.overlap("{class1/method1/cluster1}", "{class2/method2/cluster2}") to find overlap
 		
-		g.bfs("org.apache.catalina.core.StandardHost");
-//		g.bfs("org.apache.catalina.core.StandardContext");
-        g.overlap("org.apache.catalina.core.StandardContext", "org.apache.catalina.core.StandardHost");
-		//g.overlap("258", "286");
+		
+		// use g.overlapRoot("{class1 or method1 or cluster1}", "{class2 or method2 or cluster2}") 
+		// to find ROOTs of overlapping subtrees
+
+		
+		// use this method to find the overlapping NODES given multiple roots
+        String roots[] = {"org.apache.catalina.core.StandardHost",
+        		"org.apache.catalina.core.StandardContext",
+        		"org.apache.catalina.core.StandardEngine",
+        		"org.apache.catalina.core.StandardService",
+        		"org.apache.catalina.core.StandardServer"};
+        g.overlap_s(new HashSet<String>(Arrays.asList(roots)) );
 	}
 }

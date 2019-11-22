@@ -100,7 +100,58 @@ public class Graph {
 		}
 	}
 	
-	public void overlap(String s1, String s2) {
+	private Set<Node> getChildren (String s) {
+		if (!map.containsKey(s)) return null;
+		Node root = map.get(s);
+		Queue<Node> q = new LinkedList<Node>();
+		Set<Node> queued = new HashSet<Node>();
+		q.add(root);
+		queued.add(root);
+		while (!q.isEmpty()) {
+			Node n = q.peek();
+			q.remove();
+			Iterator<Pair<InvocationType, Node>> it = n.getNeighbors();
+			while (it.hasNext()) {
+				Node next = it.next().getValue();
+				if (!queued.contains(next)) {
+					q.add(next);
+					queued.add(next);
+				}
+			}
+		}
+		return queued;
+	}
+	
+	public void overlap(Set<Node> roots) {
+		Iterator<Node> it = roots.iterator();
+		Set<Node> overlap = null;
+		while (it.hasNext()) {
+			if (overlap == null)
+				overlap = getChildren(it.next().getName());
+			else 
+				overlap.retainAll(getChildren(it.next().getName()));
+			System.out.println(overlap.size());
+		}
+		for (Node n : overlap) {
+			// filters java utilities
+			if (!n.getName().startsWith("java"))
+				System.out.println(n.getName());
+		}		
+	}
+	
+	public void overlap_s(Set<String> roots) {
+		Set<Node> set = new HashSet<Node>();
+		for (String s : roots)
+			if (map.containsKey(s))
+				set.add(map.get(s));
+		overlap(set);
+	}
+	
+	public void overlapClusters() {
+		overlap(new HashSet<Node>(clusterMap.values()));
+	}
+	
+	public void overlapRoot(String s1, String s2) {
 		if (!map.containsKey(s1) || !map.containsKey(s2)) return;
 		Set<Node> set1 = new HashSet<Node>();
 		Set<Node> set2 = new HashSet<Node>();
